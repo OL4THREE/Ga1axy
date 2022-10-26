@@ -438,7 +438,6 @@ def Decode_Des(text, key, iv, mode, result):
 
 
         elif (mode == 'ECB' or mode == 'ecb' or mode == 'Ecb'):
-            iv = des_iv(iv)
             des1 = DES.new(key.encode('utf-8'), DES.MODE_ECB)
             try:
                 if (result == 'hex' or result == 'Hex' or result == 'HEX'):
