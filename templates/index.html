@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ga1axy - 多功能加解密工具箱</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">✦</span>
+                    <span class="logo-text">Ga1axy</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="切换主题">🌓</button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-group">
+                    <span class="nav-group-title">编码 / 解码</span>
+                    <a href="#url" class="nav-item active" data-tab="url">
+                        <span class="nav-icon">🔗</span> URL
+                    </a>
+                    <a href="#unicode" class="nav-item" data-tab="unicode">
+                        <span class="nav-icon">🔤</span> Unicode
+                    </a>
+                    <a href="#hex" class="nav-item" data-tab="hex">
+                        <span class="nav-icon">⬡</span> Hex
+                    </a>
+                    <a href="#base" class="nav-item" data-tab="base">
+                        <span class="nav-icon">🔢</span> Base 系列
+                    </a>
+                    <a href="#html" class="nav-item" data-tab="html">
+                        <span class="nav-icon">🌐</span> HTML
+                    </a>
+                    <a href="#morse" class="nav-item" data-tab="morse">
+                        <span class="nav-icon">📡</span> 摩斯密码
+                    </a>
+                    <a href="#time" class="nav-item" data-tab="time">
+                        <span class="nav-icon">⏰</span> 时间戳
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <span class="nav-group-title">Hash</span>
+                    <a href="#md5" class="nav-item" data-tab="md5">
+                        <span class="nav-icon">🔐</span> MD5
+                    </a>
+                    <a href="#sha" class="nav-item" data-tab="sha">
+                        <span class="nav-icon">🔑</span> SHA 系列
+                    </a>
+                    <a href="#hashdb" class="nav-item" data-tab="hashdb">
+                        <span class="nav-icon">📚</span> Hash 样本库
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <span class="nav-group-title">对称加密</span>
+                    <a href="#des" class="nav-item" data-tab="des">
+                        <span class="nav-icon">🔒</span> DES
+                    </a>
+                    <a href="#aes" class="nav-item" data-tab="aes">
+                        <span class="nav-icon">🔏</span> AES
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <span class="nav-group-title">Token / 其他</span>
+                    <a href="#jwt" class="nav-item" data-tab="jwt">
+                        <span class="nav-icon">🪙</span> JWT
+                    </a>
+                    <a href="#baseimg" class="nav-item" data-tab="baseimg">
+                        <span class="nav-icon">🖼️</span> Base64 图片
+                    </a>
+                    <a href="#runtime" class="nav-item" data-tab="runtime">
+                        <span class="nav-icon">⚡</span> Runtime Payload
+                    </a>
+                    <a href="#all" class="nav-item" data-tab="all">
+                        <span class="nav-icon">🔄</span> 一键 ALL
+                    </a>
+                </div>
+                <div class="nav-group">
+                    <span class="nav-group-title">批量处理</span>
+                    <a href="#file" class="nav-item" data-tab="file">
+                        <span class="nav-icon">📂</span> 文件批量处理
+                    </a>
+                </div>
+            </nav>
+            <div class="sidebar-footer">
+                <span>Ga1axy v2.0 | <a href="https://github.com/ol4three" target="_blank">@ol4three</a></span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Tab: URL -->
+            <section class="tab-content active" id="tab-url">
+                <h2 class="tab-title">URL 编码 / 解码</h2>
+                <p class="tab-desc">对 URL 进行百分比编码或解码</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="url_text" rows="4" placeholder="输入 URL 或文本..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('url','e')">🔒 编码</button>
+                        <button class="btn btn-secondary" onclick="crypto('url','d')">🔓 解码</button>
+                        <button class="btn btn-outline" onclick="clearInput('url')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="url_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('url_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('url')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Unicode -->
+            <section class="tab-content" id="tab-unicode">
+                <h2 class="tab-title">Unicode 编码 / 解码</h2>
+                <p class="tab-desc">对文本进行 Unicode 转义编码或解码</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="unicode_text" rows="4" placeholder="输入文本或 \\u 编码..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('unicode','e')">🔒 编码</button>
+                        <button class="btn btn-secondary" onclick="crypto('unicode','d')">🔓 解码</button>
+                        <button class="btn btn-outline" onclick="clearInput('unicode')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="unicode_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('unicode_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('unicode')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Hex -->
+            <section class="tab-content" id="tab-hex">
+                <h2 class="tab-title">Hex 编码 / 解码</h2>
+                <p class="tab-desc">十六进制编码与解码，支持多种格式输出</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="hex_text" rows="4" placeholder="输入文本或 Hex（如 616161 或 \\x61\\x61\\x61）..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('hex','e')">🔒 编码</button>
+                        <button class="btn btn-secondary" onclick="crypto('hex','d')">🔓 解码</button>
+                        <button class="btn btn-outline" onclick="clearInput('hex')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="hex_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('hex_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('hex')">⬇ 填入输入框</button>
+                    </div>
+                    <div class="result-formats" id="hex_formats" style="display:none">
+                        <label>其他格式</label>
+                        <div class="format-list" id="hex_format_list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Base -->
+            <section class="tab-content" id="tab-base">
+                <h2 class="tab-title">Base 系列编码 / 解码</h2>
+                <p class="tab-desc">Base16 / Base32 / Base64 / Base85 编码解码</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="base_text" rows="4" placeholder="输入文本..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoBase('e')">🔒 编码全部</button>
+                        <button class="btn btn-secondary" onclick="cryptoBase('d')">🔓 解码全部</button>
+                        <button class="btn btn-outline" onclick="clearInput('base')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-grid">
+                        <div class="output-group">
+                            <label>Base16</label>
+                            <textarea class="crypto-output" id="base16_output" rows="3" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('base16_output')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('base_text','base16_output')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Base32</label>
+                            <textarea class="crypto-output" id="base32_output" rows="3" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('base32_output')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('base_text','base32_output')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Base64</label>
+                            <textarea class="crypto-output" id="base64_output" rows="3" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('base64_output')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('base_text','base64_output')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Base85</label>
+                            <textarea class="crypto-output" id="base85_output" rows="3" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('base85_output')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('base_text','base85_output')">⬇</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: HTML -->
+            <section class="tab-content" id="tab-html">
+                <h2 class="tab-title">HTML 编码 / 解码</h2>
+                <p class="tab-desc">HTML 实体编码与解码</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="html_text" rows="4" placeholder="输入 HTML 或文本..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('html','e')">🔒 编码</button>
+                        <button class="btn btn-secondary" onclick="crypto('html','d')">🔓 解码</button>
+                        <button class="btn btn-outline" onclick="clearInput('html')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="html_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('html_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('html')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Morse -->
+            <section class="tab-content" id="tab-morse">
+                <h2 class="tab-title">摩斯密码 编码 / 解码</h2>
+                <p class="tab-desc">莫尔斯电码编码与解码</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="morse_text" rows="4" placeholder="输入文本或摩斯码..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('morse','e')">🔒 编码</button>
+                        <button class="btn btn-secondary" onclick="crypto('morse','d')">🔓 解码</button>
+                        <button class="btn btn-outline" onclick="clearInput('morse')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="morse_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('morse_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('morse')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Time -->
+            <section class="tab-content" id="tab-time">
+                <h2 class="tab-title">时间戳 编码 / 解码</h2>
+                <p class="tab-desc">时间与 Unix 时间戳互转</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="time_text" rows="2" placeholder="输入时间 (2022-10-21 17:10:09) 或时间戳 (1666343409)..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('time','e')">🔒 时间 → 时间戳</button>
+                        <button class="btn btn-secondary" onclick="crypto('time','d')">🔓 时间戳 → 时间</button>
+                        <button class="btn btn-outline" onclick="document.getElementById('time_text').value = Math.floor(Date.now()/1000); crypto('time','d')">🕐 当前时间戳</button>
+                        <button class="btn btn-outline" onclick="document.getElementById('time_text').value = new Date().toISOString().slice(0,19).replace('T',' '); crypto('time','e')">📅 当前时间</button>
+                        <button class="btn btn-outline" onclick="clearInput('time')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="time_output" rows="2" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('time_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('time')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: MD5 -->
+            <section class="tab-content" id="tab-md5">
+                <h2 class="tab-title">MD5 加密 / 解密</h2>
+                <p class="tab-desc">MD5 哈希计算，解密需依赖本地 Hash 样本库</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="md5_text" rows="4" placeholder="输入明文或 MD5 哈希值..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('md5','e')">🔒 加密</button>
+                        <button class="btn btn-secondary" onclick="crypto('md5','d')">🔓 解密</button>
+                        <button class="btn btn-outline" onclick="clearInput('md5')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="md5_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('md5_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('md5')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: SHA -->
+            <section class="tab-content" id="tab-sha">
+                <h2 class="tab-title">SHA 系列 加密 / 解密</h2>
+                <p class="tab-desc">SHA-1 / SHA-224 / SHA-256 / SHA-384 / SHA-512 哈希计算与解码（需本地样本库）</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="sha_text" rows="4" placeholder="输入明文或 Hash 值..."></textarea>
+                    </div>
+                    <div class="sha-type-selector">
+                        <label>算法类型：</label>
+                        <select id="sha_type" class="form-select">
+                            <option value="sha1">SHA-1</option>
+                            <option value="sha224">SHA-224</option>
+                            <option value="sha256" selected>SHA-256</option>
+                            <option value="sha384">SHA-384</option>
+                            <option value="sha512">SHA-512</option>
+                        </select>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoSHA('e')">🔒 加密</button>
+                        <button class="btn btn-secondary" onclick="cryptoSHA('d')">🔓 解密</button>
+                        <button class="btn btn-outline" onclick="clearInput('sha')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="sha_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('sha_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('sha')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: HashDB -->
+            <section class="tab-content" id="tab-hashdb">
+                <h2 class="tab-title">Hash 样本库管理</h2>
+                <p class="tab-desc">离线环境下管理本地 Hash 样本库，支持样本查询与新增</p>
+                <div class="card">
+                    <h3>📊 样本库统计</h3>
+                    <div class="hashdb-stats" id="hashdb_stats">
+                        <div class="stat-item" data-type="md5"><span class="stat-name">MD5</span><span class="stat-count">-</span></div>
+                        <div class="stat-item" data-type="sha1"><span class="stat-name">SHA-1</span><span class="stat-count">-</span></div>
+                        <div class="stat-item" data-type="sha224"><span class="stat-name">SHA-224</span><span class="stat-count">-</span></div>
+                        <div class="stat-item" data-type="sha256"><span class="stat-name">SHA-256</span><span class="stat-count">-</span></div>
+                        <div class="stat-item" data-type="sha384"><span class="stat-name">SHA-384</span><span class="stat-count">-</span></div>
+                        <div class="stat-item" data-type="sha512"><span class="stat-name">SHA-512</span><span class="stat-count">-</span></div>
+                    </div>
+                    <button class="btn btn-outline" onclick="refreshHashDBStats()">🔄 刷新统计</button>
+                </div>
+                <div class="card">
+                    <h3>🔍 查询 Hash 样本</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hash 类型</label>
+                            <select id="hashdb_query_type" class="form-select">
+                                <option value="md5">MD5</option>
+                                <option value="sha1">SHA-1</option>
+                                <option value="sha224">SHA-224</option>
+                                <option value="sha256" selected>SHA-256</option>
+                                <option value="sha384">SHA-384</option>
+                                <option value="sha512">SHA-512</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:2">
+                            <label>Hash 值</label>
+                            <input type="text" id="hashdb_query_value" class="form-input" placeholder="输入要查询的 Hash 值...">
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="queryHashDB()">🔍 查询</button>
+                    </div>
+                    <div class="output-group">
+                        <label>查询结果</label>
+                        <textarea class="crypto-output" id="hashdb_query_output" rows="3" readonly></textarea>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>➕ 新增样本</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Hash 类型</label>
+                            <select id="hashdb_add_type" class="form-select">
+                                <option value="md5">MD5</option>
+                                <option value="sha1">SHA-1</option>
+                                <option value="sha224">SHA-224</option>
+                                <option value="sha256" selected>SHA-256</option>
+                                <option value="sha384">SHA-384</option>
+                                <option value="sha512">SHA-512</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex:2">
+                            <label>明文</label>
+                            <input type="text" id="hashdb_add_text" class="form-input" placeholder="输入明文...">
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="addHashDB()">💾 加密并保存</button>
+                    </div>
+                    <div class="output-group">
+                        <label>保存结果</label>
+                        <textarea class="crypto-output" id="hashdb_add_output" rows="2" readonly></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: DES -->
+            <section class="tab-content" id="tab-des">
+                <h2 class="tab-title">DES 加密 / 解密</h2>
+                <p class="tab-desc">DES 对称加密，支持 ECB/CBC/CFB/OFB/EAX 模式</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="des_text" rows="3" placeholder="输入明文或密文..."></textarea>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>密钥 (Key)</label>
+                            <input type="text" id="des_key" class="form-input" placeholder="密钥 (最长8位)" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>偏移量 (IV)</label>
+                            <input type="text" id="des_iv" class="form-input" placeholder="IV (最长8位)" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>加密模式</label>
+                            <select id="des_mode" class="form-select">
+                                <option value="ECB">ECB</option>
+                                <option value="CBC" selected>CBC</option>
+                                <option value="CFB">CFB</option>
+                                <option value="OFB">OFB</option>
+                                <option value="EAX">EAX</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>输出格式</label>
+                            <select id="des_result" class="form-select">
+                                <option value="base64" selected>Base64</option>
+                                <option value="hex">Hex</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoSym('des','e')">🔒 加密</button>
+                        <button class="btn btn-secondary" onclick="cryptoSym('des','d')">🔓 解密</button>
+                        <button class="btn btn-outline" onclick="clearInput('des')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="des_output" rows="3" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('des_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('des')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: AES -->
+            <section class="tab-content" id="tab-aes">
+                <h2 class="tab-title">AES 加密 / 解密</h2>
+                <p class="tab-desc">AES 对称加密，支持 ECB/CBC/CFB/OFB/EAX 模式</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="aes_text" rows="3" placeholder="输入明文或密文..."></textarea>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>密钥 (Key)</label>
+                            <input type="text" id="aes_key" class="form-input" placeholder="密钥" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>偏移量 (IV)</label>
+                            <input type="text" id="aes_iv" class="form-input" placeholder="IV" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>加密模式</label>
+                            <select id="aes_mode" class="form-select">
+                                <option value="ECB">ECB</option>
+                                <option value="CBC" selected>CBC</option>
+                                <option value="CFB">CFB</option>
+                                <option value="OFB">OFB</option>
+                                <option value="EAX">EAX</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>输出格式</label>
+                            <select id="aes_result" class="form-select">
+                                <option value="base64" selected>Base64</option>
+                                <option value="hex">Hex</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoSym('aes','e')">🔒 加密</button>
+                        <button class="btn btn-secondary" onclick="cryptoSym('aes','d')">🔓 解密</button>
+                        <button class="btn btn-outline" onclick="clearInput('aes')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="aes_output" rows="3" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('aes_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('aes')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: JWT -->
+            <section class="tab-content" id="tab-jwt">
+                <h2 class="tab-title">JWT 编码 / 解码</h2>
+                <p class="tab-desc">JSON Web Token 生成与解析，支持自定义 Header 和 Payload</p>
+                <div class="card">
+                    <h3>🔒 编码 — 输入 Header / Payload 生成 Token</h3>
+                    <div class="form-grid">
+                        <div class="form-group" style="flex:1">
+                            <label>Header (JSON)</label>
+                            <textarea class="crypto-input" id="jwt_header" rows="3" placeholder='{"alg":"HS256","typ":"JWT","kid":"..."} （留空自动生成）'></textarea>
+                        </div>
+                        <div class="form-group" style="flex:1">
+                            <label>Payload (JSON)</label>
+                            <textarea class="crypto-input" id="jwt_payload" rows="3" placeholder="{'sub':'1234567890','name':'John Doe'}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>密钥</label>
+                            <input type="text" id="jwt_key" class="form-input" placeholder="密钥" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>算法</label>
+                            <select id="jwt_algorithm" class="form-select">
+                                <option value="HS256">HS256</option>
+                                <option value="HS384">HS384</option>
+                                <option value="HS512">HS512</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoJWT('e')">🔒 编码 → Token</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🔓 解码 — 输入 Token 解析出 Header / Payload</h3>
+                    <div class="input-group">
+                        <textarea class="crypto-input" id="jwt_token" rows="3" placeholder="粘贴完整的 JWT Token (eyJ...)" style="font-family:monospace"></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="cryptoJWT('d')">🔓 解码 Token →</button>
+                        <button class="btn btn-outline" onclick="clearInput('jwt')">🗑️ 清空</button>
+                    </div>
+                    <div id="jwt_decode_result" style="display:none; margin-top:12px">
+                        <div class="form-grid">
+                            <div class="output-group">
+                                <label>Header (解码)</label>
+                                <textarea class="crypto-output" id="jwt_decode_header" rows="3" readonly></textarea>
+                                <button class="btn btn-small" onclick="copyOutput('jwt_decode_header')">📋</button>
+                                <button class="btn btn-small" onclick="swapIntoInput('jwt_header','jwt_decode_header')">⬇ 填入 Header</button>
+                            </div>
+                            <div class="output-group">
+                                <label>Payload (解码)</label>
+                                <textarea class="crypto-output" id="jwt_decode_payload" rows="3" readonly></textarea>
+                                <button class="btn btn-small" onclick="copyOutput('jwt_decode_payload')">📋</button>
+                                <button class="btn btn-small" onclick="swapIntoInput('jwt_payload','jwt_decode_payload')">⬇ 填入 Payload</button>
+                            </div>
+                        </div>
+                        <div class="output-group">
+                            <label>Signature</label>
+                            <textarea class="crypto-output" id="jwt_decode_signature" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('jwt_decode_signature')">📋</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Base64 Image -->
+            <section class="tab-content" id="tab-baseimg">
+                <h2 class="tab-title">Base64 图片 编码 / 解码</h2>
+                <p class="tab-desc">将图片编码为 Base64 文本，或将 Base64 文本还原为图片</p>
+                <div class="card">
+                    <h3>🔒 图片 → Base64 编码</h3>
+                    <div class="form-group">
+                        <label>选择图片</label>
+                        <input type="file" id="baseimg_encode_file" class="form-input" accept="image/png,image/jpeg,image/gif,image/bmp,image/webp">
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="encodeBase64Img()">🔒 编码为 Base64</button>
+                    </div>
+                    <div class="output-group">
+                        <label>Base64 结果</label>
+                        <textarea class="crypto-output" id="baseimg_encode_output" rows="4" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('baseimg_encode_output')">📋 复制</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <h3>🔓 Base64 → 图片 解码</h3>
+                    <div class="form-group">
+                        <label>直接输入 Base64 文本</label>
+                        <textarea class="crypto-input" id="baseimg_decode_text" rows="4" placeholder="在此粘贴 Base64 编码的图片文本..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-secondary" onclick="decodeBase64ImgText()">🔓 从文本解码为图片</button>
+                    </div>
+                    <div class="form-group">
+                        <label>或选择 Base64 文本文件</label>
+                        <input type="file" id="baseimg_decode_file" class="form-input" accept=".txt">
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-outline" onclick="decodeBase64Img()">🔓 从文件解码</button>
+                    </div>
+                    <div class="output-group">
+                        <label>解码信息</label>
+                        <textarea class="crypto-output" id="baseimg_decode_output" rows="3" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('baseimg_decode_output')">📋 复制</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Runtime -->
+            <section class="tab-content" id="tab-runtime">
+                <h2 class="tab-title">Runtime Payload 生成</h2>
+                <p class="tab-desc">生成多种语言的 Base64 编码 Payload，用于渗透测试等场景</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入命令</label>
+                        <textarea class="crypto-input" id="runtime_text" rows="3" placeholder="输入系统命令..."></textarea>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="crypto('runtime','e')">⚡ 生成 Payload</button>
+                        <button class="btn btn-outline" onclick="clearInput('runtime')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-grid" id="runtime_outputs" style="display:none">
+                        <div class="output-group">
+                            <label>Base64</label>
+                            <textarea class="crypto-output" id="runtime_base64" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('runtime_base64')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('runtime_text','runtime_base64')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Bash</label>
+                            <textarea class="crypto-output" id="runtime_bash" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('runtime_bash')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('runtime_text','runtime_bash')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>PowerShell</label>
+                            <textarea class="crypto-output" id="runtime_powershell" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('runtime_powershell')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('runtime_text','runtime_powershell')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Python</label>
+                            <textarea class="crypto-output" id="runtime_python" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('runtime_python')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('runtime_text','runtime_python')">⬇</button>
+                        </div>
+                        <div class="output-group">
+                            <label>Perl</label>
+                            <textarea class="crypto-output" id="runtime_perl" rows="2" readonly></textarea>
+                            <button class="btn btn-small" onclick="copyOutput('runtime_perl')">📋</button>
+                            <button class="btn btn-small" onclick="swapIntoInput('runtime_text','runtime_perl')">⬇</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: ALL -->
+            <section class="tab-content" id="tab-all">
+                <h2 class="tab-title">一键 ALL 加解密</h2>
+                <p class="tab-desc">对所有支持的编码/加密方式进行批量操作</p>
+                <div class="card">
+                    <div class="input-group">
+                        <label>输入文本</label>
+                        <textarea class="crypto-input" id="all_text" rows="4" placeholder="输入文本..."></textarea>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>密钥 (Key)</label>
+                            <input type="text" id="all_key" class="form-input" placeholder="Key (DES/AES/JWT)" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>偏移量 (IV)</label>
+                            <input type="text" id="all_iv" class="form-input" placeholder="IV" value="1234">
+                        </div>
+                        <div class="form-group">
+                            <label>加密模式</label>
+                            <select id="all_mode" class="form-select">
+                                <option value="ECB">ECB</option>
+                                <option value="CBC" selected>CBC</option>
+                                <option value="CFB">CFB</option>
+                                <option value="OFB">OFB</option>
+                                <option value="EAX">EAX</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>结果格式 (DES/AES)</label>
+                            <select id="all_result" class="form-select">
+                                <option value="base64" selected>Base64</option>
+                                <option value="hex">Hex</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-grid" style="margin-top:4px">
+                        <div class="form-group">
+                            <label>JWT Header (JSON)</label>
+                            <input type="text" id="all_jwt_header" class="form-input" placeholder='{"alg":"HS256","typ":"JWT"}（留空自动生成）'>
+                        </div>
+                        <div class="form-group">
+                            <label>JWT 算法</label>
+                            <select id="all_jwt_algorithm" class="form-select">
+                                <option value="HS256">HS256</option>
+                                <option value="HS384">HS384</option>
+                                <option value="HS512">HS512</option>
+                                <option value="none">None</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="cryptoAll('e')">🔒 全部编码/加密</button>
+                        <button class="btn btn-secondary" onclick="cryptoAll('d')">🔓 全部解码/解密</button>
+                        <button class="btn btn-outline" onclick="clearInput('all')">🗑️ 清空</button>
+                    </div>
+                    <div class="output-group">
+                        <label>输出结果</label>
+                        <textarea class="crypto-output" id="all_output" rows="12" readonly></textarea>
+                        <button class="btn btn-small" onclick="copyOutput('all_output')">📋 复制</button>
+                        <button class="btn btn-small" onclick="swapInputOutput('all')">⬇ 填入输入框</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: File -->
+            <section class="tab-content" id="tab-file">
+                <h2 class="tab-title">文件批量处理</h2>
+                <p class="tab-desc">对文件中的每一行进行批量加解密处理</p>
+                <div class="card">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>操作类型</label>
+                            <select id="file_operation" class="form-select">
+                                <option value="base64">Base64</option>
+                                <option value="base16">Base16</option>
+                                <option value="base32">Base32</option>
+                                <option value="base85">Base85</option>
+                                <option value="url">URL</option>
+                                <option value="unicode">Unicode</option>
+                                <option value="hex">Hex</option>
+                                <option value="html">HTML</option>
+                                <option value="md5">MD5</option>
+                                <option value="sha1">SHA-1</option>
+                                <option value="sha256">SHA-256</option>
+                                <option value="sha224">SHA-224</option>
+                                <option value="sha384">SHA-384</option>
+                                <option value="sha512">SHA-512</option>
+                                <option value="des">DES</option>
+                                <option value="aes">AES</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>模式</label>
+                            <select id="file_mode" class="form-select">
+                                <option value="e">编码/加密</option>
+                                <option value="d">解码/解密</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="file_crypto_params" style="display:none">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>密钥 (Key)</label>
+                                <input type="text" id="file_key" class="form-input" placeholder="Key" value="1234">
+                            </div>
+                            <div class="form-group">
+                                <label>偏移量 (IV)</label>
+                                <input type="text" id="file_iv" class="form-input" placeholder="IV" value="1234">
+                            </div>
+                            <div class="form-group">
+                                <label>加密模式</label>
+                                <select id="file_crypto_mode" class="form-select">
+                                    <option value="ECB">ECB</option>
+                                    <option value="CBC" selected>CBC</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>结果格式</label>
+                                <select id="file_result" class="form-select">
+                                    <option value="base64">Base64</option>
+                                    <option value="hex">Hex</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>选择文件</label>
+                        <input type="file" id="file_file" class="form-input" accept=".txt">
+                    </div>
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="processFile()">🚀 开始处理</button>
+                    </div>
+                    <div class="output-group" id="file_results_container" style="display:none">
+                        <label>处理结果 (<span id="file_result_count">0</span> 条)</label>
+                        <div class="file-results" id="file_results">
+                            <table>
+                                <thead><tr><th>#</th><th>输入</th><th>输出</th></tr></thead>
+                                <tbody id="file_results_body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

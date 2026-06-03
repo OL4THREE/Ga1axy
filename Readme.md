@@ -1,246 +1,209 @@
-# Ga1axy
-[![Author](https://img.shields.io/badge/Author-ol4three-blueviolet.svg)](https://github.com/ol4three)     [![Version](https://img.shields.io/badge/Version-1.0-green.svg)](https://github.com/ol4three)
+# Ga1axy v2.0
 
-### 程序简介
-Ga1axy是一款用于加解密的多功能利用神器，含特定模式加解密，内建自己的Hash样本库，可以在离线环境对简单的Hash算法进行加解密，批量加解密的CLI版本，之后会继续更新界面优化版本。目前实现加解密方式如下：
+[![Author](https://img.shields.io/badge/Author-ol4three-blueviolet.svg)](https://github.com/ol4three) [![Version](https://img.shields.io/badge/Version-2.0-green.svg)](https://github.com/ol4three)
 
+> 多功能加解密工具箱 — CLI + Web 双模式，集编码/解码、哈希计算、对称加密、JWT、图片转码、Payload 生成于一体
 
+---
 
-| Encryption | Support |
-| ---------- | ------- |
-| Url        | ✅       |
-| Unicode    | ✅       |
-| Hex        | ✅       |
-| Base16     | ✅       |
-| Base32     | ✅       |
-| Base64     | ✅       |
-| Base85     | ✅       |
-| Html       | ✅       |
-| Time       | ✅       |
-| Morse      | ✅       |
-| Md5        | ✅       |
-| Sha1       | ✅       |
-| Sha224     | ✅       |
-| Sha384     | ✅       |
-| Sha512     | ✅       |
-| Des        | ✅       |
-| Aes        | ✅       |
-| Jwt        | ✅       |
-| base64img  | ✅       |
-| Runtime    | ✅       |
+## ✨ 新特性 (v2.0)
 
-------
+### 🌐 Web 图形界面
+基于 Flask 构建的现代化 Web UI，支持深色/浅色主题切换，告别命令行参数记忆。
 
+### 🎯 功能增强
+- **一键 ALL** — 同时对全部 20+ 种加密方式批量操作，支持 DES/AES 完整参数配置
+- **填入输入框** — 每个选项卡输出结果可一键回填至输入框，编解码流转丝滑
+- **响应式设计** — 桌面端侧边栏导航 + 移动端自适配
+- **键盘快捷键** — `Ctrl+Enter` 快速触发操作
 
+### 📚 Hash 样本库管理
+Web 界面下直接查询本地 Hash 样本库、新增样本、查看统计，离线环境依然可用。
 
-## Args
+### 🖼️ Base64 图片互转
+支持图片 → Base64 编码、Base64 文本 → 图片解码，编码结果一键复制。
 
-- -M
-  - e (default)
-  - d 
-- -key
-- -iv
-- -mode
-  - ecb
-  - cbc
-  - ...
-- -resu
-  - hex
-  - base64
-- -c
-  - choice mode
-- -f
-  - file encryption
-- -o
-  - output file
+---
 
-# Mode
+## 支持的加解密方式
 
-## All
+| 分类 | 功能 | 支持 |
+|------|------|:----:|
+| **编码/解码** | URL | ✅ |
+| | Unicode | ✅ |
+| | Hex (3 种格式) | ✅ |
+| | Base16 / Base32 / Base64 / Base85 | ✅ |
+| | HTML 实体 | ✅ |
+| | 摩斯密码 | ✅ |
+| | 时间戳互转 | ✅ |
+| **哈希** | MD5 | ✅ |
+| | SHA-1 / SHA-224 / SHA-256 / SHA-384 / SHA-512 | ✅ |
+| **对称加密** | DES (ECB/CBC/CFB/OFB/EAX) | ✅ |
+| | AES (ECB/CBC/CFB/OFB/EAX) | ✅ |
+| **Token** | JWT 编码/解码 | ✅ |
+| **图片** | Base64 图片互转 | ✅ |
+| **Payload** | Runtime Payload 生成 (Bash/PowerShell/Python/Perl) | ✅ |
+| **批量** | 文件逐行批量加解密 | ✅ |
 
-```
-python3 Ga1axy.py -A {echo} -key 1234 -iv 1234
-python3 Ga1axy.py -A o4JcYiS4szqphHpzTQKVxg== -key 1234 -iv 1234 -M d
+---
+
+## 快速开始
+
+### 环境要求
+- Python 3.8+
+- pip
+
+### 安装依赖
+
+```bash
+pip3 install -r requirements.txt
 ```
 
-![image-20221021164607237](https://oss-map.oss-cn-beijing.aliyuncs.com/img/image-20221021164607237.png)
+### 启动 Web 界面
 
+```bash
+# 方式一：直接启动
+python3 app.py
 
-
-## Url
-
-```
-python3 Ga1axy.py -url https://www.baidu.com
-python3 Ga1axy.py -url https://www.baidu.com -M e
-python3 Ga1axy.py -url %68%74%74%70%73%3a%2f%2f%77%77%77%2e%62%61%69%64%75%2e%63%6f%6d -M d
+# 方式二：使用启动脚本
+bash run.sh
 ```
 
-## Unicode
+访问 `http://127.0.0.1:5002` 即可使用。
 
-```
-python3 Ga1axy.py -unicode 你好
-python3 Ga1axy.py -unicode 你好 -M e
-python3 Ga1axy.py -unicode '\u4f60\u597d' -M d
-```
+### CLI 模式（向后兼容）
 
-## Hex
+v2.0 完全保留 CLI 功能，使用方式与 v1.0 一致：
 
-```
-python3 Ga1axy.py -hex aaa
-python3 Ga1axy.py -hex aaa -M e
-python3 Ga1axy.py -hex 616161 -M d
-python3 Ga1axy.py -hex 0x610x610x61 -M d
-python3 Ga1axy.py -hex '\x61\x61\x61' -M d
-```
-
-## Base
-
-```
-python3 Ga1axy.py -base aaa
-python3 Ga1axy.py -base aaa -M e
-python3 Ga1axy.py -base MFQWC=== -M d
-```
-
-## Html
-
-```
-python3 Ga1axy.py -html '<~!a#>'
-python3 Ga1axy.py -html '<~!a#>' -M e
-python3 Ga1axy.py -html '&lt;~!a#&gt;' -M d
-```
-
-## Time
-
-```
-python3 Ga1axy.py -time '2022-10-21 17:10:09'
-python3 Ga1axy.py -time '2022-10-21 17:10:09' -M e
-python3 Ga1axy.py -time '1666343409' -M d
-```
-
-## Runtime
-
-```
-python3 Ga1axy.py -runtime 'open -a Calculator'
-python3 Ga1axy.py -runtime 'open -a Calculator' -M e
-```
-
-## Morse
-
-```
-python3 Ga1axy.py -morse ol4three
-python3 Ga1axy.py -morse ol4three -M e
-python3 Ga1axy.py -morse '--- .-.. ....- - .... .-. . .' -M d
-```
-
-## Md5
-
-```
-python3 Ga1axy.py -md5 123456
+```bash
+python3 Ga1axy.py -base64 hello
 python3 Ga1axy.py -md5 123456 -M e
-python3 Ga1axy.py -md5 e10adc3949ba59abbe56e057f20f883e -M d
-```
-
-## Des
-
-```
-python3 Ga1axy.py -des aaa -key 1234 -iv 1234
-python3 Ga1axy.py -des aaa -key 1234 -iv 1234 -M e
-python3 Ga1axy.py -des aaa -key 1234 -iv 1234 -M e -resu hex
-python3 Ga1axy.py -des kNy9q8orGGI= -key 1234 -iv 1234 -M d
-python3 Ga1axy.py -des kNy9q8orGGI= -key 1234 -iv 1234 -M d -resu base
-python3 Ga1axy.py -des 90dcbdabca2b1862 -key 1234 -iv 1234 -M d -resu hex
-```
-
-## Aes
-
-```
-python3 Ga1axy.py -aes aaa -key 1234 -iv 1234
 python3 Ga1axy.py -aes aaa -key 1234 -iv 1234 -M e
-python3 Ga1axy.py -aes aaa -key 1234 -iv 1234 -M e -resu hex
-python3 Ga1axy.py -aes 5pnlmNFAmxosZYjisJEtpA== -key 1234 -iv 1234 -M d
-python3 Ga1axy.py -aes 5pnlmNFAmxosZYjisJEtpA== -key 1234 -iv 1234 -M d -resu base
-python3 Ga1axy.py -aes ec14cec8ffd02caf5204b3eeb04e1363 -key 1234 -iv 1234 -M d -resu hex
 ```
 
-## Jwt
+详细 CLI 参数见下方 [CLI 参数](#-cli-参数) 章节。
 
-```
-python3 Ga1axy.py -jwt "{'sub': '1234567890', 'name': 'John Doe', 'iat': 1516239022}" -key 1234
-python3 Ga1axy.py -jwt "{'sub': '1234567890', 'name': 'John Doe', 'iat': 1516239022}" -key 1234 -mode none
-python3 Ga1axy.py -jwt "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.B3gYryCXk5aEJpcECJizJrB1F0NWd9LogK9Ay4nf_x8" -key 1234 -M d
-```
+---
 
-## BaseImg
+## Web 界面截图
 
-```
-python3 Ga1axy.py -baseimg aaa.png -M e
-python3 Ga1axy.py -baseimg result/BaseImg.txt -M d
-```
+| 深色主题 | 浅色主题 |
+|---------|---------|
+| (默认) | 点击侧边栏 🌓 切换 |
 
-## Hash
+---
 
-```
-python3 Ga1axy.py -sha1 aaa -M e
-python3 Ga1axy.py -sha224 aaa -M e
-python3 Ga1axy.py -sha256 aaa -M e
-python3 Ga1axy.py -sha384 aaa -M e
-python3 Ga1axy.py -sha512 aaa -M e
-```
-
-## File
-
-```
-python3 Ga1axy.py -f test.txt -c base64 -o base64.txt
-python3 Ga1axy.py -f test.txt -c base64 -M e -o base64.txt 
-python3 Ga1axy.py -f base64.txt -c base64 -M d -o base64de.txt
-python3 Ga1axy.py -f test.txt -c aes -key 1234 -iv 1234 -mode cbc
-python3 Ga1axy.py -f test.txt -c aes -key 1234 -iv 1234 -mode cbc -M e
-python3 Ga1axy.py -f result/aes.txt -c aes -key 1234 -iv 1234 -mode cbc -M d
-```
-
-# HashDB
-
-使用**HashDB.py** 来进行自己的本地Hash数据配置
-
-```
-python3 HashDB.py
-```
-
-
-
-# Directory
+## 📁 项目结构
 
 ```
 .
-├── Ga1axy.py
-├── HashDB.py
-├── Readme.md
-├── aaa.png
-├── base
-│   └── dic.txt
-├── bbb.png
-├── config
-│   ├── md5.txt
-│   ├── sha1.txt
-│   ├── sha224.txt
-│   ├── sha256.txt
-│   ├── sha384.txt
-│   └── sha512.txt
-├── result
-│   ├── BaseImg.png
-│   ├── BaseImg.txt
-│   ├── aes.txt
-│   ├── base64.txt
-│   ├── des.txt
-│   ├── md5.txt
-│   ├── sha1.txt
-│   └── sha256.txt
-└── test.txt
+├── app.py                 # Flask Web 后端
+├── Ga1axy.py              # CLI 核心引擎 (v1.0 兼容)
+├── HashDB.py              # Hash 样本库管理
+├── requirements.txt       # Python 依赖
+├── run.sh                 # 一键启动脚本
+│
+├── templates/
+│   └── index.html         # Web 前端页面
+│
+├── static/
+│   ├── css/
+│   │   └── style.css      # 主题样式 (深色/浅色)
+│   └── js/
+│       └── app.js         # 前端交互逻辑
+│
+├── config/                # Hash 样本库文件 (md5/sha1/sha256/...)
+├── base/
+│   └── dic.txt            # 字典文件
+├── result/                # 结果输出目录
+├── uploads/               # 文件上传临时目录
+│
+├── aaa.png / bbb.png      # 测试图片
+└── test.txt               # 测试文件
 ```
 
+---
 
+## 🧩 HashDB 样本库管理
 
-# Star History
+### Web 界面
+- 在「Hash 样本库」选项卡查看各类型样本数量
+- 输入 Hash 值查询明文
+- 输入明文自动计算并保存到本地样本库
+
+### CLI 方式
+
+```bash
+python3 HashDB.py
+```
+
+通过编辑 `config/{hash_type}.txt` 文件自定义样本数据。
+
+---
+
+## ⚙️ CLI 参数
+
+| 参数 | 说明 | 示例 |
+|------|------|------|
+| `-A` | 全部加密方式 | `python3 Ga1axy.py -A hello` |
+| `-M` | 模式: `e` 编码/`d` 解码 | `-M e` / `-M d` |
+| `-key` | 密钥 (DES/AES/JWT) | `-key 1234` |
+| `-iv` | 偏移量 (DES/AES) | `-iv 1234` |
+| `-mode` | 加密模式 (ECB/CBC/CFB/OFB/EAX) | `-mode cbc` |
+| `-resu` | 结果格式 (hex/base64) | `-resu hex` |
+| `-f` | 批量文件处理 | `-f test.txt` |
+| `-c` | 批量处理模式选择 | `-c base64` |
+| `-o` | 输出文件路径 | `-o result.txt` |
+
+### 使用示例
+
+```bash
+# URL 编码
+python3 Ga1axy.py -url https://www.baidu.com
+
+# MD5 加密
+python3 Ga1axy.py -md5 123456 -M e
+
+# MD5 解密（需本地样本库支持）
+python3 Ga1axy.py -md5 e10adc3949ba59abbe56e057f20f883e -M d
+
+# AES-CBC 加密
+python3 Ga1axy.py -aes hello -key 1234 -iv 1234 -M e -mode cbc
+
+# DES 解密 (Hex 格式)
+python3 Ga1axy.py -des 90dcbdabca2b1862 -key 1234 -M d -resu hex
+
+# JWT 编码
+python3 Ga1axy.py -jwt "{'sub':'1234567890','name':'John Doe','iat':1516239022}" -key 1234
+
+# Base64 图片编码
+python3 Ga1axy.py -baseimg aaa.png -M e
+
+# 批量文件处理
+python3 Ga1axy.py -f test.txt -c base64 -o base64.txt
+```
+
+---
+
+## 🛠️ 技术栈
+
+- **后端**: Python 3, Flask
+- **前端**: HTML5, CSS3, JavaScript (原生)
+- **加密库**: PyCryptodome, PyJWT, hashlib
+- **图片处理**: Pillow
+
+---
+
+## 📜 许可证
+
+本项目仅供学习研究使用。
+
+---
+
+## ⭐ Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=OL4THREE/Ga1axy&type=Date)](https://star-history.com/#OL4THREE/Ga1axy&Date)
 
+---
+
+**Author: [ol4three](https://github.com/ol4three)**

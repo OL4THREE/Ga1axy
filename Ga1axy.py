@@ -15,7 +15,7 @@ print('''\033[32m
     \|_______|\|__|\|__|    \|__|\|__|\|__/__/ /\ __\\\___/ /     
                                           |__|/ \|__\|___|/                                             
                                                                 \033[36mAuthor:ol4three\033[0m
-                                                                \033[36mVersion: 1.0\033[0m
+                                                                \033[36mVersion: 2.0\033[0m
 \033[0m''')
 
 # Read txt
@@ -119,6 +119,19 @@ def Decode_Base64(text):
         # base pad
         if(len(text)%3!=0):
             text = text + (len(text)%3) * '='
+        resu = base64.b64decode(text)
+        return resu.decode()
+    except:
+        return "\033[31m解密失败\033[0m"
+
+def Decode_Base64URL(text):
+    """Decode base64url (JWT-safe variant)."""
+    try:
+        # Replace URL-safe chars and add padding
+        text = text.replace('-', '+').replace('_', '/')
+        padding = 4 - len(text) % 4
+        if padding != 4:
+            text += '=' * padding
         resu = base64.b64decode(text)
         return resu.decode()
     except:
@@ -692,26 +705,58 @@ def Decode_AES(text, key, iv, mode, result):
         return "\033[31m解密失败\033[0m"
 
 #JWT
-headers = {
-    "alg": "none",
-    "type": "jwt"
-    }
 
-def Encode_JWT(text, key, mode):
+def _parse_jwt_json(text):
+    """Parse JSON or Python dict literal string. Accepts both formats."""
+    text = text.strip()
+    # Try standard JSON first (handles true/false/null)
     try:
-        data = eval(text)
-        if(mode == 'none' or mode == 'None' or mode == 'NONE'):
-          resu = jwt.encode(data, "", headers=headers, algorithm='none')
-        else:
-          resu = jwt.encode(data, key, algorithm='HS256')
-        return resu
+        return json.loads(text)
+    except json.JSONDecodeError:
+        pass
+    # Try Python literal eval (handles True/False/None, single quotes, etc.)
+    try:
+        # Replace JSON-like true/false/null with Python equivalents before eval
+        import re
+        cleaned = re.sub(r':\s*true\s*([,}\s])', r': True\1', text)
+        cleaned = re.sub(r':\s*false\s*([,}\s])', r': False\1', cleaned)
+        cleaned = re.sub(r':\s*null\s*([,}\s])', r': None\1', cleaned)
+        return eval(cleaned)
     except:
-        return "\033[31m加密失败\033[0m"
+        pass
+    # Last resort: raw eval (for Python dict syntax like {'key':'val'})
+    return eval(text)
+
+def Encode_JWT(payload_text, key, mode, header_text=None):
+    try:
+        payload = _parse_jwt_json(payload_text)
+        if header_text and header_text.strip():
+            header = _parse_jwt_json(header_text)
+        else:
+            header = {"alg": mode if mode else 'HS256', "type": "jwt"}
+        if(mode == 'none' or mode == 'None' or mode == 'NONE'):
+          resu = jwt.encode(payload, "", headers=header, algorithm='none')
+        else:
+          resu = jwt.encode(payload, key, headers=header, algorithm=mode)
+        return resu
+    except Exception as e:
+        return f"\033[31m加密失败: {str(e)}\033[0m"
+
 def Decode_JWT(text):
     try:
-        text = text.split('.')
-        resu = "headers : " + Decode_Base64(text[0]) +" Payload : " + Decode_Base64(text[1])
-        return resu
+        parts = text.split('.')
+        if len(parts) != 3:
+            return "\033[31m解密失败: JWT 格式错误\033[0m"
+        header_raw = Decode_Base64URL(parts[0])
+        payload_raw = Decode_Base64URL(parts[1])
+        signature = parts[2]
+        if '解密失败' in header_raw or '解密失败' in payload_raw:
+            return "\033[31m解密失败: JWT 格式不正确\033[0m"
+        return json.dumps({
+            "header": header_raw,
+            "payload": payload_raw,
+            "signature": signature
+        }, ensure_ascii=False, indent=2)
     except:
         return "\033[31m解密失败\033[0m"
 

@@ -1,3 +1,4 @@
-Pillow==9.2.0
-pycryptodome==3.15.0
-PyJWT==2.6.0
+Flask>=3.0
+Pillow>=9.2.0
+pycryptodome>=3.15.0
+PyJWT>=2.6.0
